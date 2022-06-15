@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 8000
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const config = require('./config/key');
 const { User } = require("./models/User");
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors());
 
 //------------------- connecting MongoDB -------------------------
 const mongoose = require('mongoose')
@@ -20,6 +22,9 @@ mongoose.connect(config.mongoURI, {
 }).then(()=> console.log('MongoDB Connected...'))
     .catch(err => console.log(err))
 
+
+
+
 // --------------------------Register Routes ----------------------------------
 app.get('/', (req, res) =>  res.send('안녕하세요!'))
 
@@ -27,6 +32,7 @@ app.get('/', (req, res) =>  res.send('안녕하세요!'))
 app.get('/api/hello', (req, res)=> {
     res.send("Hello API 에서 보내는 메시지다!!! axios 테스트 성공!")
 })
+
 
 
 app.post('/api/users/register', (req, res) => {
@@ -42,6 +48,9 @@ app.post('/api/users/register', (req, res) => {
         })
     })
 })
+
+
+
 
 // ----------------Login Route-------------------------------------
 
@@ -103,6 +112,9 @@ app.get('/api/users/logout', auth, (req, res) => {
     })
 
 })
+
+
+
 
 
 
